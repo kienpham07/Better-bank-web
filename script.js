@@ -65,7 +65,7 @@ tabsContainer.addEventListener('click', function (e) {
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
 
-  // Add Active status to the class
+  // Add Active status to the tabs
   clicked.classList.add('operations__tab--active');
 
   // Active Active status to content area
