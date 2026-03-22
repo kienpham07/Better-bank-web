@@ -35,13 +35,11 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Scrolling effect for button "Learn more"
-
 btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 // Page navigation - Event delegation
-
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -50,6 +48,30 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// Tabbed components
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active status from tabs and tabsContent each time the user click to the new one
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Add Active status to the class
+  clicked.classList.add('operations__tab--active');
+
+  // Active Active status to content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
 
 //////////////////////////////////////////////////////////////
