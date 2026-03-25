@@ -89,8 +89,46 @@ const handleHover = function (e) {
   }
 };
 
-nav.addEventListener('mouseover', handleHover.bind(0.5, e));
-nav.addEventListener('mouseout', handleHover.bind(1, e));
+// Passing "argumment" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticky navigation (Old version)
+// const obsCallBack = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOption = {
+//   root: 'null',
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallBack, obsOption);
+// observer.observe(section1);
+
+// Stick Navigation (Better Version)
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `${navHeight}`,
+});
+
+headerObserver.observe(header);
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
