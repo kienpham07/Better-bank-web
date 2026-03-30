@@ -55,7 +55,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 // Tabbed components
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
@@ -75,7 +74,7 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
-// Menu fade animation
+// Menu fade animation on the button in navigation
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
@@ -108,7 +107,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // const observer = new IntersectionObserver(obsCallBack, obsOption);
 // observer.observe(section1);
 
-// Stick Navigation (Better Version)
+// Sticky Navigation (Better Version)
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
 
@@ -123,12 +122,33 @@ const stickyNav = function (entries) {
 };
 
 const headerObserver = new IntersectionObserver(stickyNav, {
-  root: null,
-  threshold: 0,
-  rootMargin: `${navHeight}`,
+  root: null, // Using viewport to measure properties
+  threshold: 0, // How many percent should I scroll over so that it trigger the callback
+  rootMargin: `-${navHeight}px`,
 });
 
 headerObserver.observe(header);
+
+// Reveal sections (image, ...)
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
