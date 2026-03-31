@@ -129,15 +129,19 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 
 headerObserver.observe(header);
 
-// Reveal sections (image, ...)
+// Reveal sections (image, content, ...)
 const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
-  if (!entry.isIntersecting) return;
-  entry.target.classList.remove('section--hidden');
-  observer.unobserve(entry.target);
+  // console.log(entry); - Test in console
+
+  entries.forEach(entry => {
+    // When the web first reloads at any position, all observed section will be observed at first, and then when we scroll, each target will be oberseved again at each time
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove('section--hidden');
+    observer.unobserve(entry.target);
+  });
 };
 
 const sectionObserver = new IntersectionObserver(revealSection, {
