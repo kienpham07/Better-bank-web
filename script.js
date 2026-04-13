@@ -64,6 +64,21 @@ formInputs.forEach(input => {
   input.addEventListener('change', checkFormValidity);
 });
 
+const resetModalForm = function () {
+  if (!modalForm) return;
+  modalForm.reset();
+  checkFormValidity();
+  closeModal();
+};
+
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) {
+    resetModalForm();
+  } else {
+    resetModalForm();
+  }
+});
+
 // Handle Next step button click
 btnNextStep.addEventListener('click', function (e) {
   e.preventDefault();
