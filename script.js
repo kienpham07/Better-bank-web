@@ -37,6 +37,39 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+// Handle Next step button in modal form with validation
+const modalForm = document.querySelector('.modal__form');
+const btnNextStep = document.querySelector('.modal__form .btn');
+const formInputs = document.querySelectorAll('.modal__form input');
+
+// Disable button initially
+btnNextStep.disabled = true;
+btnNextStep.style.opacity = '0.6';
+btnNextStep.style.cursor = 'not-allowed';
+
+// Check if all fields are filled
+const checkFormValidity = function () {
+  const allFilled = Array.from(formInputs).every(
+    input => input.value.trim() !== '',
+  );
+
+  btnNextStep.disabled = !allFilled;
+  btnNextStep.style.opacity = allFilled ? '1' : '0.6';
+  btnNextStep.style.cursor = allFilled ? 'pointer' : 'not-allowed';
+};
+
+// Add event listeners to all inputs
+formInputs.forEach(input => {
+  input.addEventListener('input', checkFormValidity);
+  input.addEventListener('change', checkFormValidity);
+});
+
+// Handle Next step button click
+btnNextStep.addEventListener('click', function (e) {
+  e.preventDefault();
+  window.location.href = 'https://bank-web-nu.vercel.app/';
+});
+
 // Scrolling effect for button "Learn more"
 btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
